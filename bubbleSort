@@ -1,0 +1,84 @@
+import java.util.Random;
+import java.util.Scanner;
+
+public class Bubershotter {
+
+    public static int CheckInput() {
+        int n = 0;
+        while (true) {
+            try {
+                Scanner sc = new Scanner(System.in);
+                System.out.print("Enter the size of the array: ");
+                n = Integer.parseInt(sc.nextLine());
+                //check value of size must be a positive number
+                if (n > 0) {
+                    break;
+                } else {
+                    System.out.println("Input must be positive. Please try again!");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Input must be an integer number");
+            }
+        }
+        return n;
+    }
+
+    public static int[] createArr(int n) {
+        Random r = new Random();
+        int[] arr = new int[n];
+        //Loop use to random each element of array
+        for (int i = 0; i < n; i++) {
+            arr[i] = r.nextInt(n);
+        }
+        return arr;
+    }
+
+    public static void BubbleSort(int arr[], int n) {
+        boolean sorted = true;
+        /*Loop use to accessed from the first to last element of array, 
+        after each loop, one element is sorted*/
+        for (int i = 0; i < n - 1; i++) {
+            /*Loop use to accessed first unsorted element to the element 
+            stand before the last unsorted element*/
+            for (int j = 0; j < n - 1 - i; j++) {
+                //compare each pair adjacent elements
+                if (arr[j] > arr[j + 1]) {
+                    int temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                    sorted = false;
+                }
+            }
+            if (sorted) {
+                return;
+            }
+        }
+    }
+
+    public static void printArray(String mess, int arr[], int n) {
+        System.out.println(mess);
+        //Loop use to accessed each element of array and display
+        for (int i = 0; i < n; i++) {
+            //Check index to Display comma
+            if (i == n - 1) {
+                System.out.print(arr[i] + ".");
+            } else {
+                System.out.print(arr[i] + ", ");
+            }
+        }
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        //1. User enter a positive number decimal
+        int n = CheckInput();
+        //2. Create array by generate random integer in range
+        int[] arr = createArr(n);
+        // 3. Display before sort
+        printArray("Array before sorting:", arr, n);
+        // 4. Sort by Bubble sort
+        BubbleSort(arr, n);
+        // 5. Display after sort
+        printArray("Array after sorting:", arr, n);
+    }
+}
